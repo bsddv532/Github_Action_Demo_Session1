@@ -39,7 +39,6 @@ jobs:
       data2: ${{ steps.step2.outputs.op2 }}
 
 
-
   job2:
     needs: job1
 
@@ -53,4 +52,25 @@ jobs:
           echo ${{ needs.job1.outputs.data1 }}
           echo ${{ needs.job1.outputs.data2 }}
 
-          
+
+# for committing the existing files to another branch
+  job3: 
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+        with:
+          ref: master
+
+      # - name: Create new branch
+      #   run: |
+      #     git checkout -b new-branch
+      #     git push -u origin new-branch
+
+      - name: Make changes and commit
+        run: |
+          git add .
+          git commit -m "Made some changes"
+          git push -u origin testing
+
