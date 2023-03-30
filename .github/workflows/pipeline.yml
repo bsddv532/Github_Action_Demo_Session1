@@ -6,29 +6,51 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
  
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+env:
+  var1: "It is a variable"
+
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  job1:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: echo Hello, world!
+        id: step1
+        run: echo "::set-output name=op1::Hello, New Relic"
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
+        id: step2
+        run: echo "::set-output name=op2::$var1"
+
+    outputs:
+      data1: ${{ steps.step1.outputs.op1 }}
+      data2: ${{ steps.step2.outputs.op2 }}
+
+
+
+  job2:
+    needs: job1
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run output from job1
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          echo ${{ needs.job1.outputs.data1 }}
+          echo ${{ needs.job1.outputs.data2 }}
+
+          
