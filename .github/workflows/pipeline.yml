@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
 
 env:
-  var1: "It is a variable"
+  var2: "It is a variable"
 
 jobs:
   # This workflow contains a single job called "build"

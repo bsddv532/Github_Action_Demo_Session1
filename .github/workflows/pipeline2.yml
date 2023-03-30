@@ -2,6 +2,7 @@
 name: CI_workflow2
 
 on:
+# It will make this workflow dependent on another workflow result
   workflow_run:
     workflows: [CI_workflow]
     types:
@@ -13,7 +14,7 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - run: echo 'The triggering workflow passed'
-      
+
   on-failure:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'failure' }}
