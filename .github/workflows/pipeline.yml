@@ -68,14 +68,12 @@ jobs:
       #     git checkout -b demobranch
       #     git push -u origin demobranch
 
-      - name: Giving authorization
-        run: |
-          git config --global user.email "deepakpradhan9962@gmail.com"
-          git config --global user.name "bsddv532"
+
 
       - name: Make changes and commit
+        with:
+          token: ${{secrets.ACCESS_TOKEN}}
         run: |
-          git checkout testing
           git add .
           git commit -m "Made some changes"
           git push -u origin testing
