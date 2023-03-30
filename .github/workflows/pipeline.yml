@@ -63,16 +63,21 @@ jobs:
         with:
           ref: master
 
-      - name: Create new branch
+      # - name: Create new branch
+      #   run: |
+      #     git checkout -b demobranch
+      #     git push -u origin demobranch
+
+      - name: Giving authorization
         run: |
-          git checkout -b demobranch
-          git push -u origin demobranch
+          git config --global user.email "deepakpradhan9962@gmail.com"
+          git config --global user.name "bsddv532"
 
       - name: Make changes and commit
         run: |
           git add .
           git commit -m "Made some changes"
-          git push -u origin demobranch
+          git push -u origin testing
 
   # job4:
   
