@@ -75,6 +75,7 @@ jobs:
 
       - name: Make changes and commit
         run: |
+          git checkout testing
           git add .
           git commit -m "Made some changes"
           git push -u origin testing
