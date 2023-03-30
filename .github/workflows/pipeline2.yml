@@ -2,6 +2,7 @@
 name: CI_workflow2
 
 on:
+  
 # It will make this workflow dependent on another workflow result
   workflow_run:
     workflows: [CI_workflow]
