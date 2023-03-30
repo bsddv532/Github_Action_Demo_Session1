@@ -54,23 +54,40 @@ jobs:
 
 
 # for committing the existing files to another branch
-  job3: 
-    runs-on: ubuntu-latest
+  # job3: 
+  #   runs-on: ubuntu-latest
 
+  #   steps:
+  #     - name: Clone repository
+  #       uses: actions/checkout@v3
+  #       with:
+  #         ref: master
+
+  #     # - name: Create new branch
+  #     #   run: |
+  #     #     git checkout -b new-branch
+  #     #     git push -u origin new-branch
+
+  #     - name: Make changes and commit
+  #       run: |
+  #         git add .
+  #         git commit -m "Made some changes"
+  #         git push -u origin testing
+
+  job4:
+    runs-on: ubuntu-latest
     steps:
       - name: Clone repository
         uses: actions/checkout@v3
         with:
           ref: master
 
-      # - name: Create new branch
-      #   run: |
-      #     git checkout -b new-branch
-      #     git push -u origin new-branch
+      - name: Checkout target branch
+        run: git checkout testing
 
       - name: Make changes and commit
         run: |
           git add .
           git commit -m "Made some changes"
-          git push -u origin testing
+          git push origin testing
 
