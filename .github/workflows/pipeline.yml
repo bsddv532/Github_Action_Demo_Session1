@@ -57,10 +57,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-      with:
-        token: ${{secrets.ACCESS_TOKEN}}
-    - run: |
-        git push -u origin testing
+      # with:
+      #   token: ${{secrets.ACCESS_TOKEN}}
+    # - run: |
+    #     git push -u origin testing
+    
+    - name: Push
+      uses: s0/git-publish-subdir-action@develop
+      env:
+        REPO: self
+        BRANCH: testing # The branch name where you want to push the assets
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
+        MESSAGE: "Commit to another branch" # The commit message
 
 
   
