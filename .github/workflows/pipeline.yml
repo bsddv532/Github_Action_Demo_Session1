@@ -80,9 +80,9 @@ jobs:
     name: Push to testing
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@testing
+    - uses: actions/checkout@master
     - run: |
-        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+        git remote set-url origin https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com/${{ github.repository }}.git
         git push -f origin develop:testing
 
 
