@@ -53,20 +53,30 @@ jobs:
           echo ${{ needs.job1.outputs.data2 }}
 
 
-  
-  report:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+    - uses: actions/checkout@v2
+      with:
+        token: ${{secrets.ACCESS_TOKEN}}
+    - run: |
+        git push -u origin testing
+
+
+  
+  # report:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
       
-      - name: Commit report
-        run: |
-          git config --global user.name 'bsddv532'
-          git config --global user.email 'deepakpradhan9962@gmail.com'
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
-          git checkout "${GITHUB_REF:11}"
-          git commit -am "Automated report"
-          git push -u origin testing
+  #     - name: Commit report
+  #       run: |
+  #         git config --global user.name 'bsddv532'
+  #         git config --global user.email 'deepakpradhan9962@gmail.com'
+  #         git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+  #         git checkout "${GITHUB_REF:11}"
+  #         git commit -am "commiting code to testing"
+  #         git push -u origin testing
 
 
 # for committing the existing files to another branch
