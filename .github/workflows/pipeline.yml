@@ -54,28 +54,37 @@ jobs:
 
 
 # for committing the existing files to another branch
-  job3: 
+  # job3: 
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - name: Clone repository
+  #       uses: actions/checkout@v3
+  #       with:
+  #         ref: master
+  #         token: ${{secrets.ACCESS_TOKEN}}
+
+  #     # - name: Create new branch
+  #     #   run: |
+  #     #     git checkout -b demobranch
+  #     #     git push -u origin demobranch
+
+  #     - name: Make changes and commit
+  #       run: |
+  #         git add .
+  #         git commit -m "Made some changes"
+  #         git push -u origin testing
+
+
+  push-to-testing:
+    name: Push to testing
     runs-on: ubuntu-latest
-
     steps:
-      - name: Clone repository
-        uses: actions/checkout@v3
-        with:
-          ref: master
-          token: ${{secrets.ACCESS_TOKEN}}
+    - uses: actions/checkout@testing
+    - run: |
+        git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+        git push -f origin develop:testing
 
-      # - name: Create new branch
-      #   run: |
-      #     git checkout -b demobranch
-      #     git push -u origin demobranch
-
-
-
-      - name: Make changes and commit
-        run: |
-          git add .
-          git commit -m "Made some changes"
-          git push -u origin testing
 
   # job4:
   
