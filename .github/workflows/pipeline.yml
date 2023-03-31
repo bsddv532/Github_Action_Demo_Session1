@@ -53,6 +53,22 @@ jobs:
           echo ${{ needs.job1.outputs.data2 }}
 
 
+  
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Commit report
+        run: |
+          git config --global user.name 'bsddv532'
+          git config --global user.email 'deepakpradhan9962@gmail.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+          git checkout "${GITHUB_REF:11}"
+          git commit -am "Automated report"
+          git push -u origin testing
+
+
 # for committing the existing files to another branch
   # job3: 
   #   runs-on: ubuntu-latest
@@ -76,18 +92,17 @@ jobs:
   #         git push -u origin testing
 
 
-  push-to-testing:
-    name: Push to testing
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
-    - run: |
-        git remote set-url origin https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com/${{ github.repository }}.git
-        git push -f origin develop:testing
+  # push-to-testing:
+  #   name: Push to testing
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@master
+  #   - run: |
+  #       git remote set-url origin https://x-access-token:${{ secrets.ACCESS_TOKEN }}@github.com/${{ github.repository }}.git
+  #       git push -f origin develop:testing
 
 
   # job4:
-  
   #   runs-on: ubuntu-latest
   #   steps:
   #     - name: Clone repository
