@@ -13,6 +13,9 @@ on:
 
 env:
   var1: "It is a variable"
+  GITHUB_USERNAME: bsddv532
+  GITHUB_EMAIL: deepakpradhan9962@gmail.com
+  GITHUB_REPO_NAME: Github_Action_Demo_Session1
 
 jobs:
   # This workflow contains a single job called "build"
@@ -52,23 +55,43 @@ jobs:
           echo ${{ needs.job1.outputs.data1 }}
           echo ${{ needs.job1.outputs.data2 }}
 
-
-  build:
+  
+  pushing_to_another_branch:
     runs-on: ubuntu-latest
+    # needs: ['Docker_build_and_push']
     steps:
-    - uses: actions/checkout@v2
-      # with:
-      #   token: ${{secrets.ACCESS_TOKEN}}
-    # - run: |
-    #     git push -u origin testing
-    
-    - name: Push
-      uses: s0/git-publish-subdir-action@develop
-      env:
-        REPO: self
-        BRANCH: testing # The branch name where you want to push the assets
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
-        MESSAGE: "Commit to another branch" # The commit message
+      - name: Checkout
+        uses: actions/checkout@v3
+        with: 
+          repository: ${{ env.GITHUB_USERNAME }}/${{ env.GITHUB_REPO_NAME }}
+          ref: 'master'
+          token: ${{ secrets.K8S_GITHUB_TOKEN }}
+      - name: setup git config
+        run: |
+          git config --global user.name "${{ env.GITHUB_USERNAME }}"
+          git config --global user.email "${{ env.GITHUB_EMAIL }}"
+          git add -A
+          git commit -m "Updated code"
+          git push origin testing
+
+
+
+  # build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - uses: actions/checkout@v2
+  #     # with:
+  #     #   token: ${{secrets.ACCESS_TOKEN}}
+  #   # - run: |
+  #   #     git push -u origin testing
+
+  #   - name: Push
+  #     uses: s0/git-publish-subdir-action@develop
+  #     env:
+  #       REPO: self
+  #       BRANCH: testing # The branch name where you want to push the assets
+  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
+  #       MESSAGE: "Commit to another branch" # The commit message
 
 
   
